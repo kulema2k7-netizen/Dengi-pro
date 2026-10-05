@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Денежные средства</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#2f6bff">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--bg:#f3f4f7;--card:#fff;--tx:#14161c;--mut:#7a8090;--ac:#2f6bff;--in:#18a058;--out:#e5484d;--bd:#e3e6ec;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1015;--card:#181b23;--tx:#eef0f5;--mut:#8b92a3;--bd:#262a35}}
+:root[data-theme="dark"]{--bg:#0e1015;--card:#181b23;--tx:#eef0f5;--mut:#8b92a3;--bd:#262a35}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.4 system-ui,-apple-system,Roboto,sans-serif;padding:14px 14px 90px;max-width:560px;margin:auto}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.top b{font-size:18px}
+.ib{background:var(--card);border:1px solid var(--bd);color:var(--tx);border-radius:12px;padding:8px 12px;font-size:15px}
+.big{background:var(--card);border-radius:22px;padding:22px;text-align:center;border:1px solid var(--bd)}
+.big small{color:var(--mut);letter-spacing:.08em}.big .n{font-size:40px;font-weight:800;margin:4px 0 12px}
+.row2{display:flex;justify-content:space-around}.row2 div{font-weight:700}.row2 span{display:block;font-size:12px;color:var(--mut);font-weight:400}
+.in{color:var(--in)}.out{color:var(--out)}
+h3{margin:20px 4px 8px;font-size:13px;color:var(--mut);letter-spacing:.08em}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:14px 16px;margin-bottom:10px}
+.card .nm{font-weight:700;font-size:17px;display:flex;justify-content:space-between}
+.kv{display:flex;justify-content:space-between;color:var(--mut);font-size:14px;margin-top:3px}.kv b{color:var(--tx)}
+.rest{font-size:22px;font-weight:800}
+.warn{background:rgba(229,72,77,.12);color:var(--out);border-radius:10px;padding:7px 10px;margin-top:8px;font-size:13px}
+.fab{position:fixed;left:14px;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));max-width:532px;margin:auto;background:var(--ac);color:#fff;border:0;border-radius:18px;padding:16px;font-size:17px;font-weight:700;box-shadow:0 6px 20px rgba(47,107,255,.35)}
+.tabs{display:flex;gap:6px;margin:12px 0}.tabs button{flex:1;background:var(--card);border:1px solid var(--bd);color:var(--mut);border-radius:12px;padding:9px 0;font-size:14px}.tabs button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.op{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid var(--bd)}.op:last-child{border:0}
+.op small{color:var(--mut);display:block}.op .a{font-weight:700;white-space:nowrap;text-align:right}
+.x{background:none;border:0;color:var(--mut);font-size:12px;padding:2px 0}
+.sh{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:flex-end;z-index:9}
+.sh>div{background:var(--card);width:100%;max-width:560px;margin:auto;border-radius:24px 24px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));max-height:92%;overflow:auto}
+label{display:block;font-size:13px;color:var(--mut);margin:12px 0 4px}
+input,select,textarea{width:100%;background:var(--bg);border:1px solid var(--bd);color:var(--tx);border-radius:12px;padding:13px;font-size:17px;font-family:inherit}
+.seg{display:flex;gap:8px}.seg button{flex:1;padding:13px;border-radius:12px;border:2px solid var(--bd);background:var(--bg);color:var(--tx);font-size:16px;font-weight:600}
+.seg .gi.on{border-color:var(--in);background:rgba(24,160,88,.15)}.seg .go.on{border-color:var(--out);background:rgba(229,72,77,.15)}
+.pb{width:100%;margin-top:16px;background:var(--ac);color:#fff;border:0;border-radius:14px;padding:15px;font-size:17px;font-weight:700}
+.sb{width:100%;margin-top:8px;background:none;color:var(--mut);border:0;padding:10px}
+.empty{text-align:center;color:var(--mut);padding:30px 10px}
+.tb{font-size:24px;line-height:1;padding:10px 12px;min-width:50px;min-height:50px}.top span{display:flex;gap:6px}.top b{flex:1;min-width:0;font-size:17px}
+.hp h4{margin:16px 0 4px;font-size:16px}.hp p{margin:0;color:var(--mut);font-size:15px;line-height:1.5}.hp p b{color:var(--tx)}
+.chips{display:flex;gap:8px;overflow-x:auto;margin:4px 0 12px;padding-bottom:4px}.chips button{flex:none;background:var(--card);border:1px solid var(--bd);color:var(--tx);border-radius:20px;padding:10px 16px;font-size:15px;font-weight:600}.chips button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(90px + env(safe-area-inset-bottom,0px));background:#222;color:#fff;padding:11px 18px;border-radius:22px;display:none;z-index:20;font-size:15px;max-width:90%;text-align:center}
+.chips2{display:flex;gap:8px;align-items:center;margin:4px 0 12px}.chips2>button,.cw>button{flex:none;background:var(--card);border:1px solid var(--bd);color:var(--tx);border-radius:20px;padding:10px 16px;font-size:15px;font-weight:600}.chips2>button.on,.cw>button.on{background:var(--ac);color:#fff;border-color:var(--ac)}.chips2>.tgl{padding:10px 13px;font-size:17px;color:var(--mut);max-width:45%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.cw{display:flex;gap:8px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none;transition:max-width .3s ease,opacity .25s ease}.cw::-webkit-scrollbar{display:none}.cw.c{max-width:0;opacity:0;pointer-events:none}
+</style></head><body>
+<div id="app"></div><div id="sheet"></div><div id="toast" class="toast"></div>
+<script>
+const KEY='money_journal_v1';
+let S=load(),view='home',period='all',theme='',delId=null,cat='all';cat=(S.fav&&S.cats.some(k=>k.id===S.fav))?S.fav:'all';
+let chipsC=false;try{chipsC=localStorage.getItem('money_ui_c')==='1'}catch(e){}
+function load(){let d=null;try{const r=localStorage.getItem(KEY);if(r)d=JSON.parse(r)}catch(e){}return fix(d)}
+function fix(d){if(!d||!Array.isArray(d.cps)||!Array.isArray(d.ops))d={cps:[],ops:[]};if(!Array.isArray(d.cats)||!d.cats.length)d.cats=d.cps.length?[{id:'k0',name:'Общее'}]:[{id:'k1',name:'Личное'},{id:'k2',name:'Работа'},{id:'k3',name:'Другие'}];d.cps.forEach(c=>{if(!d.cats.some(k=>k.id===c.cat))c.cat=d.cats[0].id});if(d.fav&&!d.cats.some(k=>k.id===d.fav))d.fav=null;return d}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const money=n=>(n<0?'−':'')+Math.abs(n).toLocaleString('ru-RU')+' ₽';
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const dfmt=s=>s.slice(8,10)+'.'+s.slice(5,7)+'.'+s.slice(0,4);
+function tot(id){const ids=cpIn();let i=0,o=0;S.ops.filter(p=>id==null?ids.includes(p.cp):p.cp===id).forEach(p=>p.t==='in'?i+=p.a:o+=p.a);return{i,o,r:i-o}}
+function inPeriod(d){if(period==='all')return true;const n=new Date(),t=new Date(d+'T00:00:00');const days=(new Date(n.getFullYear(),n.getMonth(),n.getDate())-t)/864e5;return period==='day'?days<1:period==='week'?days<7:days<31}
+function opHtml(p,showCp){const c=S.cps.find(x=>x.id===p.cp);return `<div class="op"><div>${showCp?`<b>${esc(c?c.name:'—')}</b>`:''}<div>${esc(p.n||(p.t==='in'?'Приход':'Расход'))}</div><small>${dfmt(p.d)}${p.c?' · '+esc(p.c):''}</small><button class="x" style="margin-right:16px" onclick="edOp('${p.id}')">изменить</button><button class="x" onclick="delOp('${p.id}')">${delId===p.id?'Точно удалить?':'удалить'}</button></div><div class="a ${p.t==='in'?'in':'out'}">${p.t==='in'?'+':'−'}${p.a.toLocaleString('ru-RU')} ₽</div></div>`}
+let qc='',qh='';
+function mt(p,q){q=q.trim().toLowerCase();if(!q)return true;const hay=[cpN(p.cp),cpCat(p.cp),p.n,p.c,dfmt(p.d),String(p.a)].join(' ').toLowerCase();return q.split(/\s+/).every(w=>hay.includes(w))}
+function opsList(){const l=S.ops.filter(p=>inPeriod(p.d)&&cpIn().includes(p.cp)&&mt(p,qh)).sort((a,b)=>b.d.localeCompare(a.d)||b.id.localeCompare(a.id));return l.length?`<div class="card">${l.map(p=>opHtml(p,1)).join('')}</div>`:`<div class="empty">Ничего не найдено</div>`}
+function fillH(){$('ol').innerHTML=opsList()}
+function cpList(){const list=S.cps.filter(c=>cat==='all'||c.cat===cat);if(!list.length)return `<div class="empty">${cat==='all'?'Пока нет контрагентов.':'В этой категории пока нет контрагентов.'}<br>Добавьте первого.</div>`;
+ let h='';const q=qc.trim().toLowerCase();
+ list.filter(c=>c.name.toLowerCase().includes(q)).forEach(c=>{const x=tot(c.id);h+=`<div class="card" onclick="${selM?`tg('${c.id}')`:`go('${c.id}')`}"><div class="nm"><span>${selM?(selIds.includes(c.id)?'☑ ':'☐ '):''}🏢 ${esc(c.name)}${cat==='all'?`<small style="color:var(--mut);font-weight:400"> · ${esc(cpCat(c.id))}</small>`:''}</span><span class="rest ${x.r<0?'out':'in'}">${money(x.r)}</span></div><div class="kv"><span>Выдано</span><b>${money(x.i)}</b></div><div class="kv"><span>Расход</span><b>${money(x.o)}</b></div>${x.r<0?`<div class="warn">⚠️ Превышен доступный остаток на ${money(-x.r)}</div>`:''}${selM?'':`<button class="x" style="margin-top:8px" onclick="event.stopPropagation();mvSheet(['${c.id}'])">📁 В категорию</button>`}</div>`});
+ return h||'<div class="empty">Ничего не найдено</div>'}
+function fillC(){$('cl').innerHTML=cpList()}
+function cpIn(){return S.cps.filter(c=>cat==='all'||c.cat===cat).map(c=>c.id)}
+function cpCat(id){const c=S.cps.find(x=>x.id===id);const k=c&&S.cats.find(x=>x.id===c.cat);return k?k.name:''}
+function catName(){const k=S.cats.find(x=>x.id===cat);return k?k.name:''}
+function chips(){const act=cat==='all'?'':catName();
+ return `<div class="chips2"><button class="${cat==='all'?'on':''}" onclick="setCat('all')">Все</button><button class="tgl" id="tgl" onclick="togChips()">${chipsC?'›'+(act?' '+esc(act):''):'‹'}</button><div class="cw ${chipsC?'c':''}" id="cw">${S.cats.map(k=>`<button class="${cat===k.id?'on':''}" onclick="setCat('${k.id}')">${S.fav===k.id?'⭐ ':''}${esc(k.name)}</button>`).join('')}<button onclick="catSheet()">＋</button></div></div>`}
+function togChips(){chipsC=!chipsC;try{localStorage.setItem('money_ui_c',chipsC?'1':'0')}catch(e){}
+ const w=$('cw'),t=$('tgl');if(!w)return;const act=cat==='all'?'':catName();t.textContent=chipsC?'›'+(act?' '+act:''):'‹';
+ if(chipsC){w.style.maxWidth=w.offsetWidth+'px';void w.offsetWidth;w.classList.add('c');w.style.maxWidth='0px'}
+ else{w.style.maxWidth='0px';void w.offsetWidth;w.classList.remove('c');w.style.maxWidth=w.scrollWidth+'px';setTimeout(()=>{w.style.maxWidth=''},350)}}
+function setCat(k){cat=k;qc='';qh='';selM=false;selIds=[];render()}
+function catSheet(id){const k=S.cats.find(x=>x.id===(id||''));
+ sheet(`<b style="font-size:19px">${k?'Категория':'Новая категория'}</b><label>Название</label><input id="kn" value="${k?esc(k.name):''}" placeholder="Например: Друзья"><button class="pb" onclick="saveCat('${id||''}')">💾 СОХРАНИТЬ</button>${k?`<button class="pb" style="background:var(--bg);color:var(--tx);border:2px solid var(--bd)" onclick="setFav('${id}')">${S.fav===id?'⭐ Главная категория (нажмите, чтобы снять)':'⭐ Сделать главной'}</button><div class="kv" style="margin-top:6px">Главная категория открывается при запуске приложения. Если снять, будет открываться «Все».</div><button class="sb out" id="dk" onclick="delCat('${id}')">Удалить категорию</button>`:''}<button class="sb" onclick="close_()">Отмена</button>`)}
+function setFav(id){S.fav=S.fav===id?null:id;const n=(S.cats.find(x=>x.id===id)||{}).name;save();close_();render();toast(S.fav?'Главная категория: «'+n+'»':'При запуске будет открываться «Все»')}
+function saveCat(id){const n=$('kn').value.trim();if(!n)return;if(id)S.cats.find(x=>x.id===id).name=n;else{const k={id:'k'+Date.now().toString(36),name:n};S.cats.push(k);cat=k.id}save();close_();render()}
+function delCat(id){const b=$('dk');if(S.cps.some(c=>c.cat===id)){b.textContent='Сначала перенесите или удалите контрагентов';return}if(S.cats.length<2){b.textContent='Нужна хотя бы одна категория';return}if(b.dataset.s!=='1'){b.dataset.s='1';b.textContent='Точно удалить? Нажмите ещё раз';return}if(S.fav===id)S.fav=null;S.cats=S.cats.filter(k=>k.id!==id);cat='all';save();close_();render()}
+let selM=false,selIds=[],mvIds=[];
+function selOn(){selM=true;selIds=[];render()}
+function selOff(){selM=false;selIds=[];render()}
+function tg(id){const i=selIds.indexOf(id);if(i<0)selIds.push(id);else selIds.splice(i,1);render()}
+function selAll(){const q=qc.trim().toLowerCase();selIds=S.cps.filter(c=>(cat==='all'||c.cat===cat)&&c.name.toLowerCase().includes(q)).map(c=>c.id);render()}
+function mvSel(){if(selIds.length)mvSheet(selIds.slice())}
+function mvSheet(ids){mvIds=ids;const names=ids.length===1?esc(cpN(ids[0])):ids.length+' контрагентов';
+ sheet(`<b style="font-size:19px">Перенести в категорию</b><p style="color:var(--mut);margin:6px 0 4px">${names}</p>${S.cats.map(k=>`<button class="pb" style="margin-top:8px;background:var(--bg);color:var(--tx);border:2px solid var(--bd)" onclick="mvTo('${k.id}')">📁 ${esc(k.name)}</button>`).join('')}<label>Или создать новую категорию</label><input id="mk" placeholder="Например: Друзья"><button class="pb" onclick="mvNew()">＋ Создать и перенести</button><button class="sb" onclick="close_()">Отмена</button>`)}
+function mvTo(k){S.cps.forEach(c=>{if(mvIds.includes(c.id))c.cat=k});const kn=(S.cats.find(x=>x.id===k)||{}).name;save();close_();selM=false;selIds=[];render();toast('Перенесено ('+mvIds.length+') → «'+kn+'»')}
+function mvNew(){const n=$('mk').value.trim();if(!n){$('mk').style.borderColor='var(--out)';return}let k=S.cats.find(x=>x.name.toLowerCase()===n.toLowerCase());if(!k){k={id:'k'+Date.now().toString(36),name:n};S.cats.push(k)}mvTo(k.id)}
+function toast(t){const e=$('toast');e.textContent=t;e.style.display='block';clearTimeout(window._tt);window._tt=setTimeout(()=>{e.style.display='none'},2800)}
+function render(){
+ let h=`<div class="top"><b>💰 Денежные средства</b><span><button class="ib tb" onclick="help_()" aria-label="Инструкция">❓</button><button class="ib tb" onclick="th()" aria-label="Тема">🌓</button><button class="ib tb" onclick="backup()" aria-label="Сохранить и загрузить">💾</button></span></div>`;
+ if(view==='home'){
+  const t=tot();
+  h+=chips();h+=`<div class="big"><small>${cat==='all'?'ОБЩИЙ БАЛАНС':esc(catName()).toUpperCase()}</small><div class="n ${t.r<0?'out':''}">${money(t.r)}</div><div class="row2"><div class="in">+${t.i.toLocaleString('ru-RU')} ₽<span>Приход</span></div><div class="out">−${t.o.toLocaleString('ru-RU')} ₽<span>Расход</span></div></div></div>`;
+  h+=`<div class="tabs"><button class="on">Контрагенты</button><button onclick="go('hist')">История</button></div>`;
+  if(S.cps.length)h+=`<div style="display:flex;gap:8px;margin-bottom:10px"><input id="q" type="search" placeholder="🔍 Поиск контрагента" value="${esc(qc)}" oninput="qc=this.value;fillC()" style="flex:1;min-width:0">${selM?`<button class="ib" onclick="selAll()">Все</button><button class="ib" onclick="selOff()">✕</button>`:`<button class="ib" onclick="selOn()">☑ Выбрать</button>`}</div>`;h+=`<div id="cl">${cpList()}</div>`;
+  h+=`<button class="ib" style="width:100%" onclick="cpSheet()">＋ Контрагент</button>`;if(cat!=='all')h+=`<button class="ib" style="width:100%;margin-top:8px" onclick="catSheet('${cat}')">✎ Категория «${esc(catName())}»</button>`;
+ }else if(view==='hist'){
+  h+=chips();h+=`<div class="tabs"><button onclick="go('home')">Контрагенты</button><button class="on">История</button></div>`;
+  h+=`<div class="tabs">${[['day','Сегодня'],['week','Неделя'],['month','Месяц'],['all','Всё']].map(([k,l])=>`<button class="${period===k?'on':''}" onclick="period='${k}';render()">${l}</button>`).join('')}</div>`;
+  h+=`<input id="qh" type="search" placeholder="🔍 Контрагент, дата (10.2026), сумма, текст" value="${esc(qh)}" oninput="qh=this.value;fillH()" style="margin-bottom:10px"><div id="ol">${opsList()}</div>`;
+ }else{
+  const c=S.cps.find(x=>x.id===view);if(!c){view='home';return render()}
+  const x=tot(c.id);
+  h+=`<button class="ib" onclick="go('home')">← Назад</button><div class="big" style="margin-top:10px"><small>${esc(c.name).toUpperCase()}</small><div class="n ${x.r<0?'out':''}">${money(x.r)}</div><div class="row2"><div class="in">+${x.i.toLocaleString('ru-RU')} ₽<span>Приход</span></div><div class="out">−${x.o.toLocaleString('ru-RU')} ₽<span>Расход</span></div></div>${x.r<0?`<div class="warn">⚠️ Превышен остаток на ${money(-x.r)}</div>`:''}</div>`;
+  const l=S.ops.filter(p=>p.cp===c.id).sort((a,b)=>b.d.localeCompare(a.d)||b.id.localeCompare(a.id));
+  h+=`<h3>ОПЕРАЦИИ</h3>`+(l.length?`<div class="card">${l.map(p=>opHtml(p,0)).join('')}</div>`:`<div class="empty">Операций нет</div>`);
+  h+=`<button class="ib" style="width:100%" onclick="cpSheet('${c.id}')">✎ Переименовать / удалить контрагента</button>`;
+ }
+ $('app').innerHTML=h+((view==='home'&&selM)?`<button class="fab" onclick="mvSel()">📁 ПЕРЕНЕСТИ В КАТЕГОРИЮ (${selIds.length})</button>`:S.cps.length?`<button class="fab" onclick="opSheet()">＋ ДОБАВИТЬ ОПЕРАЦИЮ</button>`:`<button class="fab" onclick="cpSheet()">＋ ДОБАВИТЬ КОНТРАГЕНТА</button>`);
+}
+function help_(){sheet(`<div class="hp"><b style="font-size:20px">Как пользоваться</b>
+<h4>1. Категории</h4><p>Вверху есть полоска категорий: <b>Все</b>, <b>Личное</b>, <b>Работа</b>, <b>Другие</b> и <b>＋</b>. Нажмите на категорию, и баланс, приход и расход покажут деньги только этой категории. <b>Все</b> показывает общий итог. Новую категорию добавляет <b>＋</b>. Переименовать или удалить её (удалить можно только пустую) помогает кнопка <b>«✎ Категория»</b> под списком. <b>Главная категория:</b> откройте нужную категорию, нажмите «✎ Категория» → «⭐ Сделать главной». Она будет открываться при запуске, и вы сразу увидите её баланс. Кнопка <b>‹</b> рядом с «Все» сворачивает полоску категорий влево, <b>›</b> разворачивает обратно. Чтобы перенести уже существующих контрагентов, нажмите на их карточке <b>«📁 В категорию»</b> или кнопку <b>«☑ Выбрать»</b>, отметьте нескольких и перенесите разом. Категорию можно выбрать из списка или создать тут же. Все операции контрагента переезжают вместе с ним. Пример: в «Личное» контрагент «Мой бюджет», в «Работа» организации, в «Друзья» отдельные люди.</p>
+<h4>2. Контрагенты</h4><p>Нажмите <b>«＋ Контрагент»</b> и введите название: организацию, объект или человека. Добавляйте его в нужную категорию, категорию можно сменить внутри карточки. Добавлять можно сколько нужно. Переименовать или удалить контрагента можно внутри его карточки: кнопка <b>«✎ Переименовать / удалить»</b> внизу.</p>
+<h4>3. Операции</h4><p>Кнопка <b>«＋ ДОБАВИТЬ ОПЕРАЦИЮ»</b>: выберите контрагента и тип. <b>🟢 Приход</b>: деньги, которые вы выдали контрагенту. <b>🔴 Расход</b>: сколько потрачено. Укажите сумму и назначение, например «Заправка». Дата ставится сегодняшняя, при необходимости её можно изменить.</p>
+<h4>4. Остаток</h4><p>Остаток = приход − расход. Он виден на главном экране по каждому контрагенту и в общем балансе. Если потрачено больше, чем выдано, остаток станет красным с пометкой ⚠️.</p>
+<h4>5. Исправить или удалить</h4><p>Нажмите на карточку контрагента: откроется список его операций. У каждой есть <b>«изменить»</b> (можно поправить сумму, дату, тип, текст) и <b>«удалить»</b> (нажать дважды, чтобы подтвердить).</p>
+<h4>6. История и поиск</h4><p>Вкладка <b>«История»</b> показывает все операции одной лентой. Фильтры: Сегодня, Неделя, Месяц, Всё. В строке поиска можно искать по контрагенту, дате (<b>05.10.2026</b>, <b>10.2026</b>), сумме или тексту. Слова можно сочетать: «ромашка 10.2026». На главном экране строка поиска ищет контрагента по названию.</p>
+<h4>7. Сохранение данных 💾</h4><p>Данные хранятся только в памяти этого устройства. Кнопка <b>💾</b>: «В Excel (CSV)» для просмотра таблицей, «Резервная копия (JSON)» для восстановления, а также загрузка из файла. Если очистить данные Chrome или сменить телефон, записи пропадут, поэтому сохраняйте копию регулярно, например раз в неделю.</p>
+<h4>8. Тема 🌓</h4><p>Переключает светлый и тёмный вид.</p>
+<h4>9. Установка на экран</h4><p>В Chrome: меню ⋮ → «Установить приложение» (или «Добавить на главный экран»). Дальше запускайте журнал с иконки.</p>
+<button class="pb" onclick="close_()">Понятно</button></div>`)}
+function go(v){view=v;delId=null;qc='';qh='';selM=false;selIds=[];render();scrollTo(0,0)}
+function th(){theme=theme==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',theme)}
+function close_(){$('sheet').innerHTML=''}
+function sheet(html){$('sheet').innerHTML=`<div class="sh" onclick="if(event.target===this)close_()"><div>${html}</div></div>`}
+let ot='out',eid=null;
+function opSheet(id){eid=id||null;const e=eid&&S.ops.find(p=>p.id===eid);ot=e?e.t:'out';const pre=e?e.cp:(S.cps.some(c=>c.id===view)?view:(S.cps.find(c=>cat==='all'||c.cat===cat)||S.cps[0]).id);
+ sheet(`<b style="font-size:19px">${e?'Изменить операцию':'Новая операция'}</b><label>Контрагент</label><select id="fc">${S.cats.map(k=>{const l=S.cps.filter(c=>c.cat===k.id);return l.length?`<optgroup label="${esc(k.name)}">${l.map(c=>`<option value="${c.id}" ${c.id===pre?'selected':''}>${esc(c.name)}</option>`).join('')}</optgroup>`:''}).join('')}</select><label>Тип</label><div class="seg"><button class="gi ${ot==='in'?'on':''}" id="bi" onclick="setT('in')">🟢 Приход</button><button class="go ${ot==='out'?'on':''}" id="bo" onclick="setT('out')">🔴 Расход</button></div><label>Сумма, ₽</label><input id="fa" type="number" inputmode="decimal" placeholder="12500" value="${e?e.a:''}"><label>Назначение</label><input id="fn" placeholder="Заправка автомобиля" value="${e?esc(e.n):''}"><label>Дата</label><input id="fd" type="date" value="${e?e.d:today()}"><label>Комментарий</label><input id="fm" value="${e?esc(e.c):''}"><button class="pb" onclick="saveOp()">💾 СОХРАНИТЬ</button><button class="sb" onclick="close_()">Отмена</button>`)}
+function edOp(id){delId=null;opSheet(id)}
+function setT(t){ot=t;$('bi').classList.toggle('on',t==='in');$('bo').classList.toggle('on',t==='out')}
+function saveOp(){const a=Math.round(parseFloat($('fa').value)*100)/100;if(!(a>0)){$('fa').style.borderColor='var(--out)';return}
+ const v={cp:$('fc').value,t:ot,a,n:$('fn').value.trim(),d:$('fd').value||today(),c:$('fm').value.trim()};
+ const e=eid&&S.ops.find(p=>p.id===eid);
+ if(e)Object.assign(e,v);else S.ops.push(Object.assign({id:Date.now().toString(36)+Math.random().toString(36).slice(2,5)},v));
+ eid=null;save();close_();render()}
+function delOp(id){if(delId===id){S.ops=S.ops.filter(p=>p.id!==id);delId=null;save()}else delId=id;render()}
+function cpSheet(id){const c=S.cps.find(x=>x.id===id);const kc=c?c.cat:(cat!=='all'?cat:S.cats[0].id);
+ sheet(`<b style="font-size:19px">${c?'Контрагент':'Новый контрагент'}</b><label>Название</label><input id="cn" value="${c?esc(c.name):''}" placeholder="ООО «Ромашка»"><label>Категория</label><select id="cc">${S.cats.map(k=>`<option value="${k.id}" ${k.id===kc?'selected':''}>${esc(k.name)}</option>`).join('')}</select><button class="pb" onclick="saveCp('${id||''}')">💾 СОХРАНИТЬ</button>${c?`<button class="sb out" id="dc" onclick="delCp('${id}')">Удалить контрагента и его операции</button>`:''}<button class="sb" onclick="close_()">Отмена</button>`)}
+function saveCp(id){const n=$('cn').value.trim();if(!n)return;const kk=$('cc').value;if(id){const c=S.cps.find(x=>x.id===id);c.name=n;c.cat=kk}else S.cps.push({id:'c'+Date.now().toString(36),name:n,cat:kk});if(cat!=='all')cat=kk;save();close_();render()}
+function delCp(id){const b=$('dc');if(b.dataset.s!=='1'){b.dataset.s='1';b.textContent='Точно удалить? Нажмите ещё раз';return}
+ S.cps=S.cps.filter(c=>c.id!==id);S.ops=S.ops.filter(p=>p.cp!==id);save();close_();view='home';render()}
+let pend=null;
+function backup(){pend=null;sheet(`<b style="font-size:19px">Выгрузка и загрузка</b><label>Выгрузка</label><button class="pb" style="margin-top:4px" onclick="exCsv()">📊 В Excel (CSV)</button><button class="pb" style="margin-top:8px;background:var(--in)" onclick="exJson()">💾 Резервная копия (JSON)</button><label>Загрузка из файла (CSV или JSON)</label><input id="fi" type="file" accept=".csv,.json,.txt" onchange="rdFile(this)"><div id="st" class="kv" style="margin-top:8px"></div><button class="pb" id="ap" style="display:none;background:var(--out)" onclick="applyImp()">Применить</button><label>Если файл не сохраняется — копия текстом</label><textarea id="bk" rows="3" style="font-size:12px">${esc(JSON.stringify(S))}</textarea><button class="sb" onclick="cp_()">Копировать текст</button><button class="sb" onclick="rs_()">Восстановить из текста</button><button class="sb" onclick="close_()">Закрыть</button>`)}
+function stat(t){$('st').textContent=t}
+function blobDl(name,data){const b=new Blob([data],{type:name.endsWith('.csv')?'text/csv;charset=utf-8':'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),3000)}
+async function dl(name,data){try{const d=window.claude&&await claude.use('downloads');if(!d){blobDl(name,data);stat('Файл сохранён в «Загрузки»: '+name);return}await d.save({filename:name,data});stat('Готово: '+name)}catch(e){stat(e&&e.code==='declined'?'Отменено.':'Не удалось сохранить файл, используйте копию текстом ниже.')}}
+const cpN=id=>{const c=S.cps.find(x=>x.id===id);return c?c.name:''};
+function exCsv(){const q=s=>'"'+String(s||'').replace(/"/g,'""')+'"';
+ const rows=[['Дата','Контрагент','Тип','Сумма','Назначение','Комментарий','Категория']].concat(S.ops.slice().sort((a,b)=>a.d.localeCompare(b.d)).map(p=>[dfmt(p.d),cpN(p.cp),p.t==='in'?'Приход':'Расход',String(p.a).replace('.',','),p.n,p.c,cpCat(p.cp)]));
+ dl('dengi-'+today()+'.csv','\ufeff'+rows.map(r=>r.map(q).join(';')).join('\r\n'))}
+function exJson(){dl('dengi-kopiya-'+today()+'.json',JSON.stringify(S))}
+function parseCsv(t){t=t.replace(/^\ufeff/,'');const first=t.split(/\r?\n/)[0],dl_=(first.match(/;/g)||[]).length>=(first.match(/,/g)||[]).length?';':',';
+ const rows=[];let r=[],f='',q=false;for(let i=0;i<t.length;i++){const c=t[i];if(q){if(c==='"'){if(t[i+1]==='"'){f+='"';i++}else q=false}else f+=c}else if(c==='"')q=true;else if(c===dl_){r.push(f);f=''}else if(c==='\n'||c==='\r'){if(c==='\r'&&t[i+1]==='\n')i++;r.push(f);f='';rows.push(r);r=[]}else f+=c}
+ if(f!==''||r.length){r.push(f);rows.push(r)}return rows.filter(x=>x.some(y=>y.trim()))}
+function pd(s){s=s.trim();let m=s.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);if(m)return m[3]+'-'+m[2].padStart(2,'0')+'-'+m[1].padStart(2,'0');m=s.match(/^(\d{4})-(\d{2})-(\d{2})/);return m?m[0]:today()}
+function rdFile(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const t=String(r.result);pend=null;$('ap').style.display='none';
+ try{if(t.trim()[0]==='{'){const d=JSON.parse(t);if(!(d&&Array.isArray(d.cps)&&Array.isArray(d.ops)))throw 0;pend={k:'json',d};stat('Копия: контрагентов '+d.cps.length+', операций '+d.ops.length+'. «Применить» заменит все текущие данные.')}
+ else{const rows=parseCsv(t).slice(1),ops=[];rows.forEach(x=>{const a=parseFloat(String(x[3]||'').replace(/\s/g,'').replace(',','.'));if(x[1]&&a>0)ops.push({cp:x[1].trim(),t:/прих/i.test(x[2])?'in':'out',a,n:(x[4]||'').trim(),d:pd(x[0]||''),c:(x[5]||'').trim(),k:(x[6]||'').trim()})});if(!ops.length)throw 0;pend={k:'csv',d:ops};stat('Найдено операций: '+ops.length+'. «Применить» добавит их к текущим (повторы пропускаются).')}
+ $('ap').style.display='block'}catch(e){stat('Не удалось прочитать файл.')}};r.readAsText(f,'utf-8')}
+function applyImp(){if(!pend)return;if(pend.k==='json')S=fix(pend.d);else{let add=0;pend.d.forEach(o=>{let c=S.cps.find(x=>x.name===o.cp);if(!c){let k=o.k&&S.cats.find(z=>z.name.toLowerCase()===o.k.toLowerCase());if(!k&&o.k){k={id:'k'+Date.now().toString(36)+Math.random().toString(36).slice(2,4),name:o.k};S.cats.push(k)}c={id:'c'+Date.now().toString(36)+Math.random().toString(36).slice(2,4),name:o.cp,cat:(k||S.cats[0]).id};S.cps.push(c)}
+ if(!S.ops.some(p=>p.cp===c.id&&p.d===o.d&&p.t===o.t&&p.a===o.a&&p.n===o.n)){S.ops.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),cp:c.id,t:o.t,a:o.a,n:o.n,d:o.d,c:o.c});add++}})}
+ save();pend=null;close_();go('home')}
+function cp_(){const t=$('bk');t.select();try{navigator.clipboard.writeText(t.value)}catch(e){document.execCommand('copy')}}
+function rs_(){try{const d=JSON.parse($('bk').value);if(d&&Array.isArray(d.cps)&&Array.isArray(d.ops)){S=fix(d);save();close_();go('home')}}catch(e){$('bk').style.borderColor='var(--out)'}}
+try{if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js')}catch(e){}
+try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}
+render();
+</script></body></html>
